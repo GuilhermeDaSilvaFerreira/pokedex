@@ -1,3 +1,6 @@
+# Consumir API para todos os pokemon
+# Criar cache para API
+# Criar paginação da busca se necessário
 # Mudar fonte
 # Colocar gêneros
 # Aumentar o pokemon e listar mais informações ao clicar na seta
@@ -10,6 +13,7 @@
 
 
 ## Opicional
+# Criar componentes de carregamento enquanto as informações estão sendo buscadas
 # Criar página específica para cada pokemon com mais detalhes
 # Criar página para explicação dos tipos
 # Criação de tema dark e light
