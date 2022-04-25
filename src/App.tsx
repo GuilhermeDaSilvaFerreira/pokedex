@@ -1,14 +1,21 @@
+import { ThemeProvider } from "styled-components";
+
 import Header from "./components/Header/Header";
 import Pokedex from "./components/Pokedex/Pokedex";
-import GlobalStyle from "./styles/styles";
+
+import GlobalStyle from "./styles/global";
+import light from "./styles/themes/light";
+import dark from "./styles/themes/dark";
 
 function App() {
     return (
-        <div>
+        <ThemeProvider theme={light}>
             <GlobalStyle></GlobalStyle>
-            <Header></Header>
-            <Pokedex></Pokedex>
-        </div>
+            <div>
+                <Header></Header>
+                <Pokedex></Pokedex>
+            </div>
+        </ThemeProvider>
     );
 }
 

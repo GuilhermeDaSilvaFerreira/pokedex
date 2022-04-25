@@ -1,5 +1,6 @@
 import NullableType from "./NullableType";
 import IResource from "./IResource";
+import IType from "./IType";
 
 interface IAbility {
     is_hidden: boolean;
@@ -74,14 +75,9 @@ interface IStats {
     stat: IResource;
 }
 
-interface ITypes {
-    slot: number;
-    type: IResource;
-}
-
 interface IPastTypes {
     generation: IResource;
-    types: ITypes[];
+    types: IType[];
 }
 
 export default interface IPokemon {
@@ -101,6 +97,6 @@ export default interface IPokemon {
     species: IResource;
     sprites: ISprites;
     stats: IStats[];
-    types: ITypes[];
+    types: IType[];
     past_types: IPastTypes[];
 }
