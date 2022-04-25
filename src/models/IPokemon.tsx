@@ -1,4 +1,4 @@
-import NullableType from "../types/NullableType";
+import NullableType from "./NullableType";
 import IResource from "./IResource";
 
 interface IAbility {
@@ -33,6 +33,28 @@ interface IMoves {
     version_group_details: IVersionDetails[];
 }
 
+interface IDreamworldSprite {
+    front_default: string;
+    front_female: NullableType<string>;
+}
+
+interface IHomeSprite {
+    front_default: string;
+    front_female: NullableType<string>;
+    front_shiny: NullableType<string>;
+    front_shiny_female: NullableType<string>;
+}
+
+interface IOfficialArtworkSprite {
+    front_default: string;
+}
+
+interface IOtherSprite {
+    dream_world: IDreamworldSprite;
+    home: IHomeSprite;
+    "official-artwork": IOfficialArtworkSprite;
+}
+
 interface ISprites {
     back_default: string;
     back_female: NullableType<string>;
@@ -42,8 +64,8 @@ interface ISprites {
     front_female: NullableType<string>;
     front_shiny: NullableType<string>;
     front_shiny_female: NullableType<string>;
-    other: object;
-    versions: object;
+    other: IOtherSprite;
+    versions: any;
 }
 
 interface IStats {

@@ -52,7 +52,6 @@
         "@typescript-eslint/no-use-before-define": [
             "error"
         ],
-        "prettier/prettier": "error",
-        "object-curly-spacing": ["error", "always"]
+        "prettier/prettier": "error"
     }
 }

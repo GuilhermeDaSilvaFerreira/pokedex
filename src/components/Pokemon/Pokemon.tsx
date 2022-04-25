@@ -1,18 +1,33 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+
 import IFlavorTextEntry from "../../models/IFlavorTextEntry";
 import IPokemon from "../../models/IPokemon";
 import IPokemonSpecies from "../../models/IPokemonSpecies";
+import { Section } from "./pokemonStyles";
 
 function Pokemon(props: IPokemon) {
     const [pokemonSpecies, setPokemonSpecies] = useState<IPokemonSpecies>();
 
-    function correctFlavorTexts(flavorTextEntries: IFlavorTextEntry[]): void {
-        flavorTextEntries.forEach((entry) => {
-            entry.flavor_text = entry.flavor_text
-                .replace("\f", " ")
-                .replace("POKéMON", "POKÉMON");
+    function getCorrectFlavorTexts(
+        flavorTextEntries: IFlavorTextEntry[]
+    ): IFlavorTextEntry[] {
+        let newFlavorTextEntries = [...flavorTextEntries];
+
+        newFlavorTextEntries = newFlavorTextEntries.filter((entry) => {
+            return entry.language.name === "en";
         });
+
+        newFlavorTextEntries = newFlavorTextEntries.map((entry) => {
+            const newEntry = { ...entry };
+            newEntry.flavor_text = newEntry.flavor_text
+                .replace("\f", " ")
+                .replace("POKéMON", "Pokémon");
+
+            return newEntry;
+        });
+
+        return newFlavorTextEntries;
     }
 
     useEffect(() => {
@@ -20,7 +35,9 @@ function Pokemon(props: IPokemon) {
             const result = await axios.get(props.species.url);
             const data: IPokemonSpecies = result.data;
 
-            correctFlavorTexts(data.flavor_text_entries);
+            data.flavor_text_entries = getCorrectFlavorTexts(
+                data.flavor_text_entries
+            );
 
             setPokemonSpecies(data);
         }
@@ -28,15 +45,31 @@ function Pokemon(props: IPokemon) {
         makeRequest();
     }, []);
 
+    function getRandomFlavorText(): string {
+        if (pokemonSpecies) {
+            const randomIndex = Math.floor(
+                Math.random() * pokemonSpecies.flavor_text_entries.length
+            );
+
+            return pokemonSpecies.flavor_text_entries[randomIndex].flavor_text;
+        }
+
+        return "";
+    }
+
     return pokemonSpecies ? (
-        <section className="pokemon">
+        <Section>
             <div className="about">
-                <h3>{props.id}</h3>
-                <h2>{props.name}</h2>
+                <h3 className="id">{props.id}</h3>
+                <h2 className="name">{props.name}</h2>
+                <p className="flavor-text">{getRandomFlavorText()}</p>
             </div>
-            <img src={props.sprites.front_default} alt={props.name} />
-            <p>{pokemonSpecies.flavor_text_entries[0].flavor_text}</p>
-        </section>
+            <img
+                className="pokemon-image"
+                src={props.sprites.other["official-artwork"].front_default}
+                alt={props.name}
+            />
+        </Section>
     ) : null;
 }
 

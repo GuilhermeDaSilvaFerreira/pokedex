@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import IPokemon from "../../models/IPokemon";
 import Pokemon from "../Pokemon/Pokemon";
-import "./pokedex.css";
+import { Main } from "./pokedexStyles";
 
 function Pokedex() {
     const [pokemon, setPokemon] = useState<IPokemon[]>([]);
@@ -10,9 +10,10 @@ function Pokedex() {
     useEffect(() => {
         async function makeRequest(): Promise<void> {
             const results = await axios.all([
+                axios.get("https://pokeapi.co/api/v2/pokemon/25/"),
                 axios.get("https://pokeapi.co/api/v2/pokemon/1/"),
-                axios.get("https://pokeapi.co/api/v2/pokemon/2/"),
-                axios.get("https://pokeapi.co/api/v2/pokemon/3/"),
+                axios.get("https://pokeapi.co/api/v2/pokemon/4/"),
+                axios.get("https://pokeapi.co/api/v2/pokemon/7/"),
             ]);
 
             const data: IPokemon[] = results.map((result) => {
@@ -32,9 +33,9 @@ function Pokedex() {
     }
 
     return (
-        <main>
+        <Main>
             <div className="pokemon-container">{getPokemonElements()}</div>
-        </main>
+        </Main>
     );
 }
 

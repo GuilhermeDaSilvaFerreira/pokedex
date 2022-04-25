@@ -1,4 +1,4 @@
-import NullableType from "../types/NullableType";
+import NullableType from "./NullableType";
 import IFlavorTextEntry from "./IFlavorTextEntry";
 import IResource from "./IResource";
 
