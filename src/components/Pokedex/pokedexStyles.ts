@@ -1,3 +1,5 @@
 import styled from "styled-components";
 
-export const Main = styled.main``;
+export const Main = styled.main`
+    margin-bottom: 50vh;
+`;

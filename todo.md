@@ -1,11 +1,9 @@
-# Consumir API para todos os pokemon
+# Criar uma página para cada geração
 # Criar cache para API
 # Criar paginação da busca se necessário
-# Mudar fonte
 # Colocar gêneros
 # Aumentar o pokemon e listar mais informações ao clicar na seta
     - Evolução
-    - Stats
     - Stats
     - Golpes (talvez seja melhor criar uma página específica para esse)
 # Colocar badge para pokemon lendários

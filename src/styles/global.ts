@@ -11,7 +11,8 @@ export default createGlobalStyle`
         background-color: ${(props) => props.theme.colors.background};
 
         font-size: 1.1rem;
-        font-family: sans-serif;
+        font-family: Roboto;
+        font-weight: 400;
         color: #333;
     }
 `;

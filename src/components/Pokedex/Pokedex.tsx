@@ -3,35 +3,65 @@ import axios from "axios";
 import IPokemon from "../../models/IPokemon";
 import Pokemon from "../Pokemon/Pokemon";
 import { Main } from "./pokedexStyles";
+import IPokemonLinks from "../../models/IPokemonLinks";
+import Nullable from "../../models/NullableType";
 
 function Pokedex() {
+    const BASE_ADRESS = "https://pokeapi.co/api/v2/pokemon/";
+    const [nextPokemonApiUrl, setNextPokemonApiUrl] = useState<Nullable<string>>(BASE_ADRESS);
     const [pokemon, setPokemon] = useState<IPokemon[]>([]);
 
-    useEffect(() => {
-        async function makeRequest(): Promise<void> {
-            const results = await axios.all([
-                axios.get("https://pokeapi.co/api/v2/pokemon/25/"),
-                axios.get("https://pokeapi.co/api/v2/pokemon/1/"),
-                axios.get("https://pokeapi.co/api/v2/pokemon/4/"),
-                axios.get("https://pokeapi.co/api/v2/pokemon/7/"),
-                axios.get("https://pokeapi.co/api/v2/pokemon/8/"),
-                axios.get("https://pokeapi.co/api/v2/pokemon/9/"),
-                axios.get("https://pokeapi.co/api/v2/pokemon/10/"),
-                axios.get("https://pokeapi.co/api/v2/pokemon/11/"),
-                axios.get("https://pokeapi.co/api/v2/pokemon/12/"),
-                axios.get("https://pokeapi.co/api/v2/pokemon/13/"),
-                axios.get("https://pokeapi.co/api/v2/pokemon/14/"),
-            ]);
+    async function getAllIndividualPokemonApi(): Promise<Nullable<IPokemonLinks>> {
+        if (nextPokemonApiUrl) {
+            const result = await axios.get(nextPokemonApiUrl);
+
+            return result.data;
+        }
+
+        return null;
+    }
+
+    async function getPokemon(): Promise<void> {
+        const pokemonApiResult = await getAllIndividualPokemonApi();
+
+        if (pokemonApiResult) {
+            const urls = pokemonApiResult.results.map((result) => result.url);
+
+            const results = await axios.all(urls.map((url) => axios.get(url)));
 
             const data: IPokemon[] = results.map((result) => {
                 return result.data;
             });
 
-            setPokemon(data);
-        }
+            setNextPokemonApiUrl(pokemonApiResult.next);
 
-        makeRequest();
+            const newPokemon = [...pokemon, ...data];
+            setPokemon(newPokemon);
+        }
+    }
+
+    function loadMore() {
+        if (document.scrollingElement) {
+            const scrollDifference = document.scrollingElement.scrollHeight - (window.innerHeight + document.documentElement.scrollTop);
+
+            if (scrollDifference <= 800) {
+                getPokemon();
+            }
+        }
+    }
+
+    useEffect(() => {
+        getPokemon();
     }, []);
+
+    useEffect(() => {
+        window.removeEventListener("scroll", loadMore);
+        window.addEventListener("scroll", loadMore, { passive: true });
+
+        return () => {
+            window.removeEventListener("scroll", loadMore);
+        };
+    }, [nextPokemonApiUrl]);
 
     function getPokemonElements() {
         return pokemon.map((poke, index) => {

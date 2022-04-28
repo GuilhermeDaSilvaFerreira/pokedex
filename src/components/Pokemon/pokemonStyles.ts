@@ -24,7 +24,7 @@ export const Section = styled.section<IProps>`
 
         margin-top: 20px;
 
-        align-self: flex-start;
+        cursor: pointer;
     }
 
     .details {
@@ -50,6 +50,17 @@ export const Section = styled.section<IProps>`
             padding: 10px 20px;
             gap: 10px;
 
+            .generation {
+                text-transform: capitalize;
+                font-weight: 500;
+                font-size: 1.2rem;
+            }
+
+            .type-icon {
+                height: 28px;
+                margin: 0 10px 10px 0;
+            }
+
             .bio {
                 display: flex;
                 flex-direction: row;
@@ -57,18 +68,14 @@ export const Section = styled.section<IProps>`
 
                 .id {
                     color: #a4a4a4;
-                    font-size: 1.6rem;
+                    font-size: 1.4rem;
                 }
 
                 .name {
                     text-transform: capitalize;
-                    font-size: 1.6rem;
+                    font-size: 1.4rem;
+                    font-weight: 700;
                 }
-            }
-
-            .type-icon {
-                height: 28px;
-                margin: 0 10px 10px 0;
             }
 
             .description {
@@ -102,6 +109,8 @@ export const Section = styled.section<IProps>`
                     text-overflow: ellipsis;
 
                     margin: 0 10px;
+
+                    font-size: 1rem;
                 }
             }
         }
@@ -127,5 +136,23 @@ export const Section = styled.section<IProps>`
 
         opacity: 1;
         transition: 0.8s cubic-bezier(0.15, 0.5, 0.35, 1);
+
+        .generation {
+            font-size: 1.4rem !important;
+
+            margin-bottom: 40px;
+        }
+
+        .id {
+            font-size: 1.6rem !important;
+        }
+
+        .name {
+            font-size: 1.6rem !important;
+        }
+
+        .flavor-text {
+            font-size: 1.2rem !important;
+        }
     }
 `;
